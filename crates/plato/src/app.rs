@@ -1,4 +1,4 @@
-use std::fs::File;
+use std::fs::{File, read_dir};
 use std::env;
 use std::thread;
 use std::process::Command;
@@ -44,16 +44,7 @@ use plato_core::context::Context;
 pub const APP_NAME: &str = "Plato";
 const FB_DEVICE: &str = "/dev/fb0";
 const RTC_DEVICE: &str = "/dev/rtc0";
-const TOUCH_INPUTS: [&str; 4] = ["/dev/input/by-path/platform-1-0038-event",
-                                 "/dev/input/by-path/platform-1-0010-event",
-                                 "/dev/input/by-path/platform-0-0010-event",
-                                 "/dev/input/event1"];
-const BUTTON_INPUTS: [&str; 4] = ["/dev/input/by-path/platform-gpio-keys-event",
-                                  "/dev/input/by-path/platform-ntx_event0-event",
-                                  "/dev/input/by-path/platform-mxckpd-event",
-                                  "/dev/input/event0"];
-const POWER_INPUTS: [&str; 2] = ["/dev/input/by-path/platform-bd71828-pwrkey-event",
-                                 "/dev/input/by-path/platform-bd71828-pwrkey.4.auto-event"];
+const INPUT_DEVICES: &str = "/dev/input/by-path";
 
 const KOBO_UPDATE_BUNDLE: &str = "/mnt/onboard/.kobo/KoboRoot.tgz";
 
@@ -230,27 +221,12 @@ pub fn run() -> Result<(), Error> {
     context.load_dictionaries();
     context.load_keyboard_layouts();
 
-    let mut paths = Vec::new();
-    for ti in &TOUCH_INPUTS {
-        if Path::new(ti).exists() {
-            paths.push(ti.to_string());
-            break;
-        }
-    }
-    for bi in &BUTTON_INPUTS {
-        if Path::new(bi).exists() {
-            paths.push(bi.to_string());
-            break;
-        }
-    }
-    for pi in &POWER_INPUTS {
-        if Path::new(pi).exists() {
-            paths.push(pi.to_string());
-            break;
-        }
-    }
+    let inputs = read_dir(INPUT_DEVICES)?
+        .filter_map(Result::ok)
+        .map(|dir| String::from(dir.path().to_string_lossy()))
+        .collect();
 
-    let (raw_sender, raw_receiver) = raw_events(paths);
+    let (raw_sender, raw_receiver) = raw_events(inputs);
     let touch_screen = gesture_events(device_events(raw_receiver, context.display, context.settings.button_scheme));
     let usb_port = usb_events();
 
