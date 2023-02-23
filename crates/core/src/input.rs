@@ -21,6 +21,7 @@ pub const EV_ABS: u16 = 0x03;
 pub const EV_MSC: u16 = 0x04;
 
 // Event codes
+pub const ABS_MT_SLOT: u16 = 0x2f;
 pub const ABS_MT_TRACKING_ID: u16 = 0x39;
 pub const ABS_MT_POSITION_X: u16 = 0x35;
 pub const ABS_MT_POSITION_Y: u16 = 0x36;
@@ -355,6 +356,16 @@ pub fn parse_device_events(rx: &Receiver<InputEvent>, ty: &Sender<DeviceEvent>, 
     let mut packets: FxHashMap<i32, TouchState> = FxHashMap::default();
     let proto = CURRENT_DEVICE.proto;
 
+    #[derive(Debug, Clone)]
+    pub struct TouchSlot {
+        status: Option<FingerStatus>,
+        packet: i32,
+        pressure: i32,
+        position: Point,
+    }
+    let mut slots = Vec::new();
+    let mut slot_id: usize = 0;
+
     let mut tc = match proto {
         TouchProto::Single => SINGLE_TOUCH_CODES,
         TouchProto::MultiA => MULTI_TOUCH_CODES_A,
@@ -375,54 +386,71 @@ pub fn parse_device_events(rx: &Receiver<InputEvent>, ty: &Sender<DeviceEvent>, 
 
     while let Ok(evt) = rx.recv() {
         if evt.kind == EV_ABS {
+            if evt.code == ABS_MT_SLOT {
+                slot_id = evt.value as usize;
+            }
+            if slot_id >= slots.len() {
+                slots.resize(slot_id+1, TouchSlot {
+                    status: None,
+                    packet: -1,
+                    pressure: 0,
+                    position: Point::default()
+                });
+            }
+
+            let slot = &mut slots[slot_id];
             if evt.code == ABS_MT_TRACKING_ID {
-                if evt.value >= 0 {
-                    id = evt.value;
-                    packets.insert(id, TouchState::default());
+                if evt.value == -1 {
+                    slot.status = Some(FingerStatus::Up);
+                } else {
+                    slot.status = Some(FingerStatus::Down);
+                    slot.packet = evt.value;
                 }
             } else if evt.code == tc.x {
-                if let Some(state) = packets.get_mut(&id) {
-                    state.position.x = if mirror_x {
-                        dims.0 as i32 - 1 - evt.value
-                    } else {
-                        evt.value
-                    };
+                slot.position.x = if mirror_x {
+                    dims.0 as i32 - 1 - evt.value
+                } else {
+                    evt.value
+                };
+                if slot.status.is_none() {
+                    slot.status = Some(FingerStatus::Motion);
                 }
             } else if evt.code == tc.y {
-                if let Some(state) = packets.get_mut(&id) {
-                    state.position.y = if mirror_y {
-                        dims.1 as i32 - 1 - evt.value
-                    } else {
-                        evt.value
-                    };
+                slot.position.y = if mirror_y {
+                    dims.1 as i32 - 1 - evt.value
+                } else {
+                    evt.value
+                };
+                if slot.status.is_none() {
+                    slot.status = Some(FingerStatus::Motion);
                 }
             } else if evt.code == tc.pressure {
-                if let Some(state) = packets.get_mut(&id) {
-                    state.pressure = evt.value;
-                    if proto == TouchProto::Single && CURRENT_DEVICE.mark() == 3 && state.pressure == 0 {
-                        state.position.x = dims.0 as i32 - 1 - state.position.x;
-                        mem::swap(&mut state.position.x, &mut state.position.y);
-                    }
-                }
+                slot.pressure = evt.value;
             }
         } else if evt.kind == EV_SYN && evt.code == SYN_REPORT {
-            // The absolute value accounts for the wrapping around that might occur,
-            // since `tv_sec` can't grow forever.
             if (evt.time.tv_sec - last_activity).abs() >= 60 {
                 last_activity = evt.time.tv_sec;
                 ty.send(DeviceEvent::UserActivity).ok();
             }
 
             if proto == TouchProto::MultiB {
-                fingers.retain(|other_id, other_position| {
-                    packets.contains_key(&other_id) ||
-                    ty.send(DeviceEvent::Finger {
-                        id: *other_id,
-                        time: seconds(evt.time),
-                        status: FingerStatus::Up,
-                        position: *other_position,
-                    }).is_err()
-                });
+                for slot in &mut slots.iter_mut() {
+                    if slot.packet == -1 {
+                        continue;
+                    }
+                    if let Some(finger_status) = slot.status {
+                        ty.send(DeviceEvent::Finger {
+                            id: slot.packet,
+                            time: seconds(evt.time),
+                            status: finger_status,
+                            position: slot.position,
+                        }).unwrap();
+                        if finger_status == FingerStatus::Up {
+                            slot.packet = -1;
+                        }
+                        slot.status = None;
+                    }
+                }
             }
 
             for (&id, state) in &packets {
