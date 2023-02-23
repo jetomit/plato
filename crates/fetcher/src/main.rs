@@ -158,7 +158,7 @@ fn main() -> Result<(), Error> {
     }
 
     if !save_path.exists() {
-        fs::create_dir(&save_path)?;
+        fs::create_dir_all(&save_path)?;
     }
 
     let client = Client::new();

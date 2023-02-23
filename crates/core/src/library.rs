@@ -37,7 +37,7 @@ pub struct Library {
 
 impl Library {
     pub fn new<P: AsRef<Path>>(home: P, mode: LibraryMode) -> Result<Self, Error> {
-        if let Err(e) = fs::create_dir(&home) {
+        if let Err(e) = fs::create_dir_all(&home) {
             if e.kind() != ErrorKind::AlreadyExists {
                 bail!(e);
             }
