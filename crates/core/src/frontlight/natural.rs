@@ -43,6 +43,10 @@ pub static ref FRONTLIGHT_DIRS: FxHashMap<LightColor, &'static str> =
              (LightColor::Red, FRONTLIGHT_RED_A),
              (LightColor::Green, FRONTLIGHT_GREEN_A)].iter().cloned().collect()
         },
+        Model::ClaraHD => {
+            [(LightColor::White, "backlight_cold"),
+             (LightColor::Orange, "backlight_warm")].iter().cloned().collect()
+        },
         _ => {
             [(LightColor::White, FRONTLIGHT_WHITE_B),
              (LightColor::Orange, FRONTLIGHT_ORANGE_B)].iter().cloned().collect()

@@ -208,8 +208,8 @@ impl Device {
             Model::AuraONE |
             Model::AuraONELimEd |
             Model::AuraH2OEd2V1 |
-            Model::AuraH2OEd2V2 => FrontlightKind::Natural,
-            Model::ClaraHD |
+            Model::AuraH2OEd2V2 |
+            Model::ClaraHD => FrontlightKind::Natural,
             Model::Forma |
             Model::Forma32GB |
             Model::LibraH2O |
