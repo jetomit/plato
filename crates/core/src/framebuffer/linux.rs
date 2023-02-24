@@ -226,11 +226,11 @@ impl Framebuffer for LinuxFramebuffer {
     }
 
     fn width(&self) -> u32 {
-        self.var_info.xres
+        self.var_info.yres
     }
 
     fn height(&self) -> u32 {
-        self.var_info.yres
+        self.var_info.xres
     }
 }
 
@@ -243,6 +243,7 @@ impl Drop for LinuxFramebuffer {
 }
 
 fn set_pixel_rgb_8(fb: &mut LinuxFramebuffer, x: u32, y: u32, rgb: [u8; 3]) {
+    let (x, y) = (y, (fb.var_info.yres-1) - x);
     let addr = (fb.var_info.xoffset as isize + x as isize) * (fb.bytes_per_pixel as isize) +
                (fb.var_info.yoffset as isize + y as isize) * (fb.fix_info.line_length as isize);
 
@@ -255,6 +256,7 @@ fn set_pixel_rgb_8(fb: &mut LinuxFramebuffer, x: u32, y: u32, rgb: [u8; 3]) {
 }
 
 fn set_pixel_rgb_16(fb: &mut LinuxFramebuffer, x: u32, y: u32, rgb: [u8; 3]) {
+    let (x, y) = (y, (fb.var_info.yres-1) - x);
     let addr = (fb.var_info.xoffset as isize + x as isize) * (fb.bytes_per_pixel as isize) +
                (fb.var_info.yoffset as isize + y as isize) * (fb.fix_info.line_length as isize);
 
@@ -268,6 +270,7 @@ fn set_pixel_rgb_16(fb: &mut LinuxFramebuffer, x: u32, y: u32, rgb: [u8; 3]) {
 }
 
 fn set_pixel_rgb_32(fb: &mut LinuxFramebuffer, x: u32, y: u32, rgb: [u8; 3]) {
+    let (x, y) = (y, (fb.var_info.yres-1) - x);
     let addr = (fb.var_info.xoffset as isize + x as isize) * (fb.bytes_per_pixel as isize) +
                (fb.var_info.yoffset as isize + y as isize) * (fb.fix_info.line_length as isize);
 
@@ -283,6 +286,7 @@ fn set_pixel_rgb_32(fb: &mut LinuxFramebuffer, x: u32, y: u32, rgb: [u8; 3]) {
 }
 
 fn get_pixel_rgb_8(fb: &LinuxFramebuffer, x: u32, y: u32) -> [u8; 3] {
+    let (x, y) = (y, (fb.var_info.yres-1) - x);
     let addr = (fb.var_info.xoffset as isize + x as isize) * (fb.bytes_per_pixel as isize) +
                (fb.var_info.yoffset as isize + y as isize) * (fb.fix_info.line_length as isize);
     let gray = unsafe { *(fb.frame.offset(addr) as *const u8) };
@@ -290,6 +294,7 @@ fn get_pixel_rgb_8(fb: &LinuxFramebuffer, x: u32, y: u32) -> [u8; 3] {
 }
 
 fn get_pixel_rgb_16(fb: &LinuxFramebuffer, x: u32, y: u32) -> [u8; 3] {
+    let (x, y) = (y, (fb.var_info.yres-1) - x);
     let addr = (fb.var_info.xoffset as isize + x as isize) * (fb.bytes_per_pixel as isize) +
                (fb.var_info.yoffset as isize + y as isize) * (fb.fix_info.line_length as isize);
     let pair = unsafe {
@@ -303,6 +308,7 @@ fn get_pixel_rgb_16(fb: &LinuxFramebuffer, x: u32, y: u32) -> [u8; 3] {
 }
 
 fn get_pixel_rgb_32(fb: &LinuxFramebuffer, x: u32, y: u32) -> [u8; 3] {
+    let (x, y) = (y, (fb.var_info.yres-1) - x);
     let addr = (fb.var_info.xoffset as isize + x as isize) * (fb.bytes_per_pixel as isize) +
                (fb.var_info.yoffset as isize + y as isize) * (fb.fix_info.line_length as isize);
     unsafe {
