@@ -6,6 +6,7 @@ mod image;
 mod transform;
 mod kobo1;
 mod kobo2;
+mod linux;
 
 use anyhow::Error;
 use crate::geom::{Point, Rectangle, surface_area, nearest_segment_point, lerp};
@@ -14,6 +15,7 @@ use crate::color::{BLACK, WHITE};
 
 pub use self::kobo1::KoboFramebuffer1;
 pub use self::kobo2::KoboFramebuffer2;
+pub use self::linux::LinuxFramebuffer;
 pub use self::image::Pixmap;
 
 #[derive(Debug, Copy, Clone)]

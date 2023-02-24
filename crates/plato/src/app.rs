@@ -8,7 +8,7 @@ use std::collections::VecDeque;
 use std::time::{Duration, Instant};
 use plato_core::anyhow::{Error, Context as ResultExt, format_err};
 use plato_core::chrono::Local;
-use plato_core::framebuffer::{Framebuffer, KoboFramebuffer1, KoboFramebuffer2, UpdateMode};
+use plato_core::framebuffer::{Framebuffer, KoboFramebuffer1, KoboFramebuffer2, LinuxFramebuffer, UpdateMode};
 use plato_core::view::{View, Event, EntryId, EntryKind, ViewId, AppCmd, RenderData, RenderQueue, UpdateData};
 use plato_core::view::{handle_event, process_render_queue, wait_for_all};
 use plato_core::view::common::{locate, locate_by_id, transfer_notifications, overlapping_rectangle};
@@ -35,7 +35,7 @@ use plato_core::view::reader::Reader;
 use plato_core::view::dialog::Dialog;
 use plato_core::view::intermission::Intermission;
 use plato_core::view::notification::Notification;
-use plato_core::device::{CURRENT_DEVICE, Orientation, FrontlightKind};
+use plato_core::device::{CURRENT_DEVICE, Model, Orientation, FrontlightKind};
 use plato_core::library::Library;
 use plato_core::font::Fonts;
 use plato_core::rtc::Rtc;
@@ -202,7 +202,9 @@ pub fn run() -> Result<(), Error> {
     let mut inactive_since = Instant::now();
     let mut exit_status = ExitStatus::Quit;
 
-    let mut fb: Box<dyn Framebuffer> = if CURRENT_DEVICE.mark() != 8 {
+    let mut fb: Box<dyn Framebuffer> = if CURRENT_DEVICE.model == Model::ClaraHD {
+        Box::new(LinuxFramebuffer::new(FB_DEVICE).context("can't create framebuffer")?)
+    } else if CURRENT_DEVICE.mark() != 8 {
         Box::new(KoboFramebuffer1::new(FB_DEVICE).context("can't create framebuffer")?)
     } else {
         Box::new(KoboFramebuffer2::new(FB_DEVICE).context("can't create framebuffer")?)
