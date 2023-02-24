@@ -55,6 +55,14 @@ case "$method" in
 		cp thirdparty/mupdf/build/release/libmupdf.so libs
 		;;
 
+	native)
+		cd mupdf_wrapper
+		./build.sh
+		cd ..
+		cargo build --release -p plato
+		exit
+		;;
+
 	skip)
 		;;
 	*)

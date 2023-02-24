@@ -21,8 +21,11 @@ fn main() {
         let target_os = env::var("CARGO_CFG_TARGET_OS").unwrap();
         match target_os.as_ref() {
             "linux" => {
+                println!("cargo:rustc-link-search=/usr/lib");
                 println!("cargo:rustc-link-search=target/mupdf_wrapper/Linux");
-                println!("cargo:rustc-link-lib=dylib=stdc++");
+                println!("cargo:rustc-link-lib=gumbo");
+                println!("cargo:rustc-link-lib=jbig2dec");
+                println!("cargo:rustc-link-lib=openjp2");
             },
             "macos" => {
                 println!("cargo:rustc-link-search=target/mupdf_wrapper/Darwin");
@@ -31,6 +34,6 @@ fn main() {
             _ => panic!("Unsupported platform: {}.", target_os),
         }
 
-        println!("cargo:rustc-link-lib=mupdf-third");
+        println!("cargo:rustc-link-lib=mupdf");
     }
 }

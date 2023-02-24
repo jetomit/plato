@@ -97,170 +97,15 @@ pub const MD_SIZE: Style = Style {
     size: FONT_SIZES[0],
 };
 
-#[cfg(any(not(target_os = "linux"), target_arch = "arm"))]
 #[link(name="mupdf")]
 extern {
-    // Based on the outputs of:
-    // arm-linux-gnueabihf-readelf -Ws ./libs/libmupdf.so | grep '\b_binary_' | \
-    // grep -v '_size$' | awk '{print $8, strtonum($3)-1}' | sort -u
-    pub static _binary_DroidSansFallback_ttf: [libc::c_uchar; 3556308];
-    pub static _binary_NotoEmoji_Regular_ttf: [libc::c_uchar; 418804];
-    pub static _binary_NotoMusic_Regular_otf: [libc::c_uchar; 60812];
-    pub static _binary_NotoNaskhArabic_Regular_otf: [libc::c_uchar; 119664];
-    pub static _binary_NotoNastaliqUrdu_Regular_otf: [libc::c_uchar; 373220];
-    pub static _binary_NotoSans_Regular_otf: [libc::c_uchar; 290336];
-    pub static _binary_NotoSansAdlam_Regular_otf: [libc::c_uchar; 33448];
-    pub static _binary_NotoSansAnatolianHieroglyphs_Regular_otf: [libc::c_uchar; 134420];
-    pub static _binary_NotoSansAvestan_Regular_otf: [libc::c_uchar; 9300];
-    pub static _binary_NotoSansBamum_Regular_otf: [libc::c_uchar; 103668];
-    pub static _binary_NotoSansBassaVah_Regular_otf: [libc::c_uchar; 6300];
-    pub static _binary_NotoSansBatak_Regular_otf: [libc::c_uchar; 11108];
-    pub static _binary_NotoSansBhaiksuki_Regular_otf: [libc::c_uchar; 121620];
-    pub static _binary_NotoSansBrahmi_Regular_otf: [libc::c_uchar; 29544];
-    pub static _binary_NotoSansBuginese_Regular_otf: [libc::c_uchar; 6256];
-    pub static _binary_NotoSansBuhid_Regular_otf: [libc::c_uchar; 5076];
-    pub static _binary_NotoSansCanadianAboriginal_Regular_otf: [libc::c_uchar; 38068];
-    pub static _binary_NotoSansCarian_Regular_otf: [libc::c_uchar; 5592];
-    pub static _binary_NotoSansCaucasianAlbanian_Regular_otf: [libc::c_uchar; 17388];
-    pub static _binary_NotoSansChakma_Regular_otf: [libc::c_uchar; 29488];
-    pub static _binary_NotoSansCham_Regular_otf: [libc::c_uchar; 21224];
-    pub static _binary_NotoSansCherokee_Regular_otf: [libc::c_uchar; 57308];
-    pub static _binary_NotoSansCoptic_Regular_otf: [libc::c_uchar; 21380];
-    pub static _binary_NotoSansCuneiform_Regular_otf: [libc::c_uchar; 416308];
-    pub static _binary_NotoSansCypriot_Regular_otf: [libc::c_uchar; 7024];
-    pub static _binary_NotoSansDeseret_Regular_otf: [libc::c_uchar; 9016];
-    pub static _binary_NotoSansDuployan_Regular_otf: [libc::c_uchar; 10276];
-    pub static _binary_NotoSansEgyptianHieroglyphs_Regular_otf: [libc::c_uchar; 362960];
-    pub static _binary_NotoSansElbasan_Regular_otf: [libc::c_uchar; 8684];
-    pub static _binary_NotoSansElymaic_Regular_otf: [libc::c_uchar; 7620];
-    pub static _binary_NotoSansGlagolitic_Regular_otf: [libc::c_uchar; 17176];
-    pub static _binary_NotoSansGothic_Regular_otf: [libc::c_uchar; 5416];
-    pub static _binary_NotoSansGunjalaGondi_Regular_otf: [libc::c_uchar; 32372];
-    pub static _binary_NotoSansHanifiRohingya_Regular_otf: [libc::c_uchar; 16576];
-    pub static _binary_NotoSansHanunoo_Regular_otf: [libc::c_uchar; 6596];
-    pub static _binary_NotoSansHatran_Regular_otf: [libc::c_uchar; 4324];
-    pub static _binary_NotoSansImperialAramaic_Regular_otf: [libc::c_uchar; 5436];
-    pub static _binary_NotoSansInscriptionalPahlavi_Regular_otf: [libc::c_uchar; 5464];
-    pub static _binary_NotoSansInscriptionalParthian_Regular_otf: [libc::c_uchar; 6788];
-    pub static _binary_NotoSansJavanese_Regular_otf: [libc::c_uchar; 86944];
-    pub static _binary_NotoSansKaithi_Regular_otf: [libc::c_uchar; 39756];
-    pub static _binary_NotoSansKayahLi_Regular_otf: [libc::c_uchar; 7100];
-    pub static _binary_NotoSansKharoshthi_Regular_otf: [libc::c_uchar; 27708];
-    pub static _binary_NotoSansKhudawadi_Regular_otf: [libc::c_uchar; 14764];
-    pub static _binary_NotoSansLepcha_Regular_otf: [libc::c_uchar; 18832];
-    pub static _binary_NotoSansLimbu_Regular_otf: [libc::c_uchar; 10040];
-    pub static _binary_NotoSansLinearA_Regular_otf: [libc::c_uchar; 33640];
-    pub static _binary_NotoSansLinearB_Regular_otf: [libc::c_uchar; 36892];
-    pub static _binary_NotoSansLisu_Regular_otf: [libc::c_uchar; 5688];
-    pub static _binary_NotoSansLycian_Regular_otf: [libc::c_uchar; 4108];
-    pub static _binary_NotoSansLydian_Regular_otf: [libc::c_uchar; 4088];
-    pub static _binary_NotoSansMahajani_Regular_otf: [libc::c_uchar; 10136];
-    pub static _binary_NotoSansMandaic_Regular_otf: [libc::c_uchar; 13160];
-    pub static _binary_NotoSansManichaean_Regular_otf: [libc::c_uchar; 16496];
-    pub static _binary_NotoSansMarchen_Regular_otf: [libc::c_uchar; 69240];
-    pub static _binary_NotoSansMasaramGondi_Regular_otf: [libc::c_uchar; 23052];
-    pub static _binary_NotoSansMath_Regular_otf: [libc::c_uchar; 258796];
-    pub static _binary_NotoSansMedefaidrin_Regular_otf: [libc::c_uchar; 27060];
-    pub static _binary_NotoSansMeeteiMayek_Regular_otf: [libc::c_uchar; 13056];
-    pub static _binary_NotoSansMendeKikakui_Regular_otf: [libc::c_uchar; 19664];
-    pub static _binary_NotoSansMeroitic_Regular_otf: [libc::c_uchar; 19980];
-    pub static _binary_NotoSansMiao_Regular_otf: [libc::c_uchar; 26460];
-    pub static _binary_NotoSansModi_Regular_otf: [libc::c_uchar; 29412];
-    pub static _binary_NotoSansMongolian_Regular_otf: [libc::c_uchar; 111040];
-    pub static _binary_NotoSansMro_Regular_otf: [libc::c_uchar; 5608];
-    pub static _binary_NotoSansMultani_Regular_otf: [libc::c_uchar; 7852];
-    pub static _binary_NotoSansNKo_Regular_otf: [libc::c_uchar; 15164];
-    pub static _binary_NotoSansNabataean_Regular_otf: [libc::c_uchar; 6448];
-    pub static _binary_NotoSansNewTaiLue_Regular_otf: [libc::c_uchar; 10884];
-    pub static _binary_NotoSansNewa_Regular_otf: [libc::c_uchar; 99568];
-    pub static _binary_NotoSansNushu_Regular_otf: [libc::c_uchar; 72472];
-    pub static _binary_NotoSansOgham_Regular_otf: [libc::c_uchar; 3720];
-    pub static _binary_NotoSansOlChiki_Regular_otf: [libc::c_uchar; 7024];
-    pub static _binary_NotoSansOldHungarian_Regular_otf: [libc::c_uchar; 44628];
-    pub static _binary_NotoSansOldItalic_Regular_otf: [libc::c_uchar; 6360];
-    pub static _binary_NotoSansOldNorthArabian_Regular_otf: [libc::c_uchar; 6132];
-    pub static _binary_NotoSansOldPermic_Regular_otf: [libc::c_uchar; 8512];
-    pub static _binary_NotoSansOldPersian_Regular_otf: [libc::c_uchar; 9856];
-    pub static _binary_NotoSansOldSogdian_Regular_otf: [libc::c_uchar; 12260];
-    pub static _binary_NotoSansOldSouthArabian_Regular_otf: [libc::c_uchar; 4624];
-    pub static _binary_NotoSansOldTurkic_Regular_otf: [libc::c_uchar; 6884];
-    pub static _binary_NotoSansOriya_Regular_otf: [libc::c_uchar; 62564];
-    pub static _binary_NotoSansOsage_Regular_otf: [libc::c_uchar; 9292];
-    pub static _binary_NotoSansOsmanya_Regular_otf: [libc::c_uchar; 6784];
-    pub static _binary_NotoSansPahawhHmong_Regular_otf: [libc::c_uchar; 13024];
-    pub static _binary_NotoSansPalmyrene_Regular_otf: [libc::c_uchar; 8480];
-    pub static _binary_NotoSansPauCinHau_Regular_otf: [libc::c_uchar; 8124];
-    pub static _binary_NotoSansPhagsPa_Regular_otf: [libc::c_uchar; 24036];
-    pub static _binary_NotoSansPhoenician_Regular_otf: [libc::c_uchar; 5288];
-    pub static _binary_NotoSansPsalterPahlavi_Regular_otf: [libc::c_uchar; 12748];
-    pub static _binary_NotoSansRejang_Regular_otf: [libc::c_uchar; 6440];
-    pub static _binary_NotoSansRunic_Regular_otf: [libc::c_uchar; 7200];
-    pub static _binary_NotoSansSamaritan_Regular_otf: [libc::c_uchar; 9024];
-    pub static _binary_NotoSansSaurashtra_Regular_otf: [libc::c_uchar; 16020];
-    pub static _binary_NotoSansSharada_Regular_otf: [libc::c_uchar; 32824];
-    pub static _binary_NotoSansShavian_Regular_otf: [libc::c_uchar; 5468];
-    pub static _binary_NotoSansSiddham_Regular_otf: [libc::c_uchar; 91992];
-    pub static _binary_NotoSansSogdian_Regular_otf: [libc::c_uchar; 48356];
-    pub static _binary_NotoSansSoraSompeng_Regular_otf: [libc::c_uchar; 6332];
-    pub static _binary_NotoSansSoyombo_Regular_otf: [libc::c_uchar; 52036];
-    pub static _binary_NotoSansSundanese_Regular_otf: [libc::c_uchar; 9420];
-    pub static _binary_NotoSansSylotiNagri_Regular_otf: [libc::c_uchar; 12852];
-    pub static _binary_NotoSansSymbols_Regular_otf: [libc::c_uchar; 109696];
-    pub static _binary_NotoSansSymbols2_Regular_otf: [libc::c_uchar; 375388];
-    pub static _binary_NotoSansSyriac_Regular_otf: [libc::c_uchar; 124756];
-    pub static _binary_NotoSansTagalog_Regular_otf: [libc::c_uchar; 5500];
-    pub static _binary_NotoSansTagbanwa_Regular_otf: [libc::c_uchar; 5356];
-    pub static _binary_NotoSansTaiLe_Regular_otf: [libc::c_uchar; 8616];
-    pub static _binary_NotoSansTaiTham_Regular_otf: [libc::c_uchar; 76880];
-    pub static _binary_NotoSansTaiViet_Regular_otf: [libc::c_uchar; 12280];
-    pub static _binary_NotoSansTakri_Regular_otf: [libc::c_uchar; 17864];
-    pub static _binary_NotoSansThaana_Regular_otf: [libc::c_uchar; 12392];
-    pub static _binary_NotoSansTifinagh_Regular_otf: [libc::c_uchar; 24776];
-    pub static _binary_NotoSansTirhuta_Regular_otf: [libc::c_uchar; 52432];
-    pub static _binary_NotoSansUgaritic_Regular_otf: [libc::c_uchar; 5048];
-    pub static _binary_NotoSansVai_Regular_otf: [libc::c_uchar; 24088];
-    pub static _binary_NotoSansWancho_Regular_otf: [libc::c_uchar; 15140];
-    pub static _binary_NotoSansWarangCiti_Regular_otf: [libc::c_uchar; 23484];
-    pub static _binary_NotoSansYi_Regular_otf: [libc::c_uchar; 92164];
-    pub static _binary_NotoSansZanabazarSquare_Regular_otf: [libc::c_uchar; 13804];
-    pub static _binary_NotoSerif_Regular_otf: [libc::c_uchar; 289412];
-    pub static _binary_NotoSerifAhom_Regular_otf: [libc::c_uchar; 14516];
-    pub static _binary_NotoSerifArmenian_Regular_otf: [libc::c_uchar; 14160];
-    pub static _binary_NotoSerifBalinese_Regular_otf: [libc::c_uchar; 32348];
-    pub static _binary_NotoSerifBengali_Regular_otf: [libc::c_uchar; 101332];
-    pub static _binary_NotoSerifDevanagari_Regular_otf: [libc::c_uchar; 169744];
-    pub static _binary_NotoSerifDogra_Regular_otf: [libc::c_uchar; 19944];
-    pub static _binary_NotoSerifEthiopic_Regular_otf: [libc::c_uchar; 113328];
-    pub static _binary_NotoSerifGeorgian_Regular_otf: [libc::c_uchar; 31988];
-    pub static _binary_NotoSerifGrantha_Regular_otf: [libc::c_uchar; 368396];
-    pub static _binary_NotoSerifGujarati_Regular_otf: [libc::c_uchar; 64848];
-    pub static _binary_NotoSerifGurmukhi_Regular_otf: [libc::c_uchar; 26992];
-    pub static _binary_NotoSerifHebrew_Regular_otf: [libc::c_uchar; 15320];
-    pub static _binary_NotoSerifKannada_Regular_otf: [libc::c_uchar; 89032];
-    pub static _binary_NotoSerifKhmer_Regular_otf: [libc::c_uchar; 40436];
-    pub static _binary_NotoSerifKhojki_Regular_otf: [libc::c_uchar; 60112];
-    pub static _binary_NotoSerifLao_Regular_otf: [libc::c_uchar; 16196];
-    pub static _binary_NotoSerifMalayalam_Regular_otf: [libc::c_uchar; 45668];
-    pub static _binary_NotoSerifMyanmar_Regular_otf: [libc::c_uchar; 127564];
-    pub static _binary_NotoSerifNyiakengPuachueHmong_Regular_otf: [libc::c_uchar; 12208];
-    pub static _binary_NotoSerifSinhala_Regular_otf: [libc::c_uchar; 74924];
-    pub static _binary_NotoSerifTamil_Regular_otf: [libc::c_uchar; 33752];
-    pub static _binary_NotoSerifTangut_Regular_otf: [libc::c_uchar; 2001224];
-    pub static _binary_NotoSerifTelugu_Regular_otf: [libc::c_uchar; 82032];
-    pub static _binary_NotoSerifThai_Regular_otf: [libc::c_uchar; 17556];
-    pub static _binary_NotoSerifTibetan_Regular_otf: [libc::c_uchar; 334156];
-    pub static _binary_NotoSerifYezidi_Regular_otf: [libc::c_uchar; 8664];
-}
-
-#[cfg(all(target_os = "linux", not(target_arch = "arm")))]
-#[link(name="mupdf")]
-extern {
+    pub static _binary_resources_fonts_droid_DroidSansFallbackFull_ttf_start: [libc::c_uchar; 5074864];
     pub static _binary_resources_fonts_droid_DroidSansFallback_ttf_start: [libc::c_uchar; 3556308];
+    pub static _binary_resources_fonts_han_SourceHanSerif_Regular_ttc_start: [libc::c_uchar; 24810724];
     pub static _binary_resources_fonts_noto_NotoEmoji_Regular_ttf_start: [libc::c_uchar; 418804];
     pub static _binary_resources_fonts_noto_NotoMusic_Regular_otf_start: [libc::c_uchar; 60812];
     pub static _binary_resources_fonts_noto_NotoNaskhArabic_Regular_otf_start: [libc::c_uchar; 119664];
     pub static _binary_resources_fonts_noto_NotoNastaliqUrdu_Regular_otf_start: [libc::c_uchar; 373220];
-    pub static _binary_resources_fonts_noto_NotoSans_Regular_otf_start: [libc::c_uchar; 290336];
     pub static _binary_resources_fonts_noto_NotoSansAdlam_Regular_otf_start: [libc::c_uchar; 33448];
     pub static _binary_resources_fonts_noto_NotoSansAnatolianHieroglyphs_Regular_otf_start: [libc::c_uchar; 134420];
     pub static _binary_resources_fonts_noto_NotoSansAvestan_Regular_otf_start: [libc::c_uchar; 9300];
@@ -357,8 +202,8 @@ extern {
     pub static _binary_resources_fonts_noto_NotoSansSoyombo_Regular_otf_start: [libc::c_uchar; 52036];
     pub static _binary_resources_fonts_noto_NotoSansSundanese_Regular_otf_start: [libc::c_uchar; 9420];
     pub static _binary_resources_fonts_noto_NotoSansSylotiNagri_Regular_otf_start: [libc::c_uchar; 12852];
-    pub static _binary_resources_fonts_noto_NotoSansSymbols_Regular_otf_start: [libc::c_uchar; 109696];
     pub static _binary_resources_fonts_noto_NotoSansSymbols2_Regular_otf_start: [libc::c_uchar; 375388];
+    pub static _binary_resources_fonts_noto_NotoSansSymbols_Regular_otf_start: [libc::c_uchar; 109696];
     pub static _binary_resources_fonts_noto_NotoSansSyriac_Regular_otf_start: [libc::c_uchar; 124756];
     pub static _binary_resources_fonts_noto_NotoSansTagalog_Regular_otf_start: [libc::c_uchar; 5500];
     pub static _binary_resources_fonts_noto_NotoSansTagbanwa_Regular_otf_start: [libc::c_uchar; 5356];
@@ -375,7 +220,7 @@ extern {
     pub static _binary_resources_fonts_noto_NotoSansWarangCiti_Regular_otf_start: [libc::c_uchar; 23484];
     pub static _binary_resources_fonts_noto_NotoSansYi_Regular_otf_start: [libc::c_uchar; 92164];
     pub static _binary_resources_fonts_noto_NotoSansZanabazarSquare_Regular_otf_start: [libc::c_uchar; 13804];
-    pub static _binary_resources_fonts_noto_NotoSerif_Regular_otf_start: [libc::c_uchar; 289412];
+    pub static _binary_resources_fonts_noto_NotoSans_Regular_otf_start: [libc::c_uchar; 290336];
     pub static _binary_resources_fonts_noto_NotoSerifAhom_Regular_otf_start: [libc::c_uchar; 14516];
     pub static _binary_resources_fonts_noto_NotoSerifArmenian_Regular_otf_start: [libc::c_uchar; 14160];
     pub static _binary_resources_fonts_noto_NotoSerifBalinese_Regular_otf_start: [libc::c_uchar; 32348];
@@ -402,6 +247,25 @@ extern {
     pub static _binary_resources_fonts_noto_NotoSerifThai_Regular_otf_start: [libc::c_uchar; 17556];
     pub static _binary_resources_fonts_noto_NotoSerifTibetan_Regular_otf_start: [libc::c_uchar; 334156];
     pub static _binary_resources_fonts_noto_NotoSerifYezidi_Regular_otf_start: [libc::c_uchar; 8664];
+    pub static _binary_resources_fonts_noto_NotoSerif_Regular_otf_start: [libc::c_uchar; 289412];
+    pub static _binary_resources_fonts_sil_CharisSIL_BoldItalic_cff_start: [libc::c_uchar; 44539];
+    pub static _binary_resources_fonts_sil_CharisSIL_Bold_cff_start: [libc::c_uchar; 40900];
+    pub static _binary_resources_fonts_sil_CharisSIL_Italic_cff_start: [libc::c_uchar; 43915];
+    pub static _binary_resources_fonts_sil_CharisSIL_cff_start: [libc::c_uchar; 59023];
+    pub static _binary_resources_fonts_urw_Dingbats_cff_start: [libc::c_uchar; 24967];
+    pub static _binary_resources_fonts_urw_NimbusMonoPS_BoldItalic_cff_start: [libc::c_uchar; 59212];
+    pub static _binary_resources_fonts_urw_NimbusMonoPS_Bold_cff_start: [libc::c_uchar; 52203];
+    pub static _binary_resources_fonts_urw_NimbusMonoPS_Italic_cff_start: [libc::c_uchar; 52468];
+    pub static _binary_resources_fonts_urw_NimbusMonoPS_Regular_cff_start: [libc::c_uchar; 45974];
+    pub static _binary_resources_fonts_urw_NimbusRoman_BoldItalic_cff_start: [libc::c_uchar; 55486];
+    pub static _binary_resources_fonts_urw_NimbusRoman_Bold_cff_start: [libc::c_uchar; 50579];
+    pub static _binary_resources_fonts_urw_NimbusRoman_Italic_cff_start: [libc::c_uchar; 56086];
+    pub static _binary_resources_fonts_urw_NimbusRoman_Regular_cff_start: [libc::c_uchar; 48556];
+    pub static _binary_resources_fonts_urw_NimbusSans_BoldItalic_cff_start: [libc::c_uchar; 39424];
+    pub static _binary_resources_fonts_urw_NimbusSans_Bold_cff_start: [libc::c_uchar; 34024];
+    pub static _binary_resources_fonts_urw_NimbusSans_Italic_cff_start: [libc::c_uchar; 39907];
+    pub static _binary_resources_fonts_urw_NimbusSans_Regular_cff_start: [libc::c_uchar; 33151];
+    pub static _binary_resources_fonts_urw_StandardSymbolsPS_cff_start: [libc::c_uchar; 16196];
 }
 
 pub const SLIDER_VALUE: Style = MD_SIZE;
@@ -599,164 +463,6 @@ pub fn font_from_style<'a>(fonts: &'a mut Fonts, style: &Style, dpi: u16) -> &'a
 #[inline]
 unsafe fn font_data_from_script(script: HbScript) -> &'static [libc::c_uchar] {
     // Extracted from mupdf in source/fitz/noto.c
-    #[cfg(any(not(target_os = "linux"), target_arch = "arm"))]
-    match script {
-        HB_SCRIPT_HANGUL |
-        HB_SCRIPT_HIRAGANA |
-        HB_SCRIPT_KATAKANA |
-        HB_SCRIPT_BOPOMOFO |
-        HB_SCRIPT_HAN => &_binary_DroidSansFallback_ttf,
-
-        HB_SCRIPT_ARABIC => &_binary_NotoNaskhArabic_Regular_otf,
-        HB_SCRIPT_SYRIAC => &_binary_NotoSansSyriac_Regular_otf,
-        HB_SCRIPT_MEROITIC_CURSIVE |
-        HB_SCRIPT_MEROITIC_HIEROGLYPHS => &_binary_NotoSansMeroitic_Regular_otf,
-
-        HB_SCRIPT_ADLAM => &_binary_NotoSansAdlam_Regular_otf,
-        HB_SCRIPT_AHOM => &_binary_NotoSerifAhom_Regular_otf,
-        HB_SCRIPT_ANATOLIAN_HIEROGLYPHS => &_binary_NotoSansAnatolianHieroglyphs_Regular_otf,
-        HB_SCRIPT_ARMENIAN => &_binary_NotoSerifArmenian_Regular_otf,
-        HB_SCRIPT_AVESTAN => &_binary_NotoSansAvestan_Regular_otf,
-        HB_SCRIPT_BALINESE => &_binary_NotoSerifBalinese_Regular_otf,
-        HB_SCRIPT_BAMUM => &_binary_NotoSansBamum_Regular_otf,
-        HB_SCRIPT_BASSA_VAH => &_binary_NotoSansBassaVah_Regular_otf,
-        HB_SCRIPT_BATAK => &_binary_NotoSansBatak_Regular_otf,
-        HB_SCRIPT_BENGALI => &_binary_NotoSerifBengali_Regular_otf,
-        HB_SCRIPT_BHAIKSUKI => &_binary_NotoSansBhaiksuki_Regular_otf,
-        HB_SCRIPT_BRAHMI => &_binary_NotoSansBrahmi_Regular_otf,
-        HB_SCRIPT_BUGINESE => &_binary_NotoSansBuginese_Regular_otf,
-        HB_SCRIPT_BUHID => &_binary_NotoSansBuhid_Regular_otf,
-        HB_SCRIPT_CANADIAN_SYLLABICS => &_binary_NotoSansCanadianAboriginal_Regular_otf,
-        HB_SCRIPT_CARIAN => &_binary_NotoSansCarian_Regular_otf,
-        HB_SCRIPT_CAUCASIAN_ALBANIAN => &_binary_NotoSansCaucasianAlbanian_Regular_otf,
-        HB_SCRIPT_CHAKMA => &_binary_NotoSansChakma_Regular_otf,
-        HB_SCRIPT_CHAM => &_binary_NotoSansCham_Regular_otf,
-        HB_SCRIPT_CHEROKEE => &_binary_NotoSansCherokee_Regular_otf,
-        HB_SCRIPT_COPTIC => &_binary_NotoSansCoptic_Regular_otf,
-        HB_SCRIPT_CUNEIFORM => &_binary_NotoSansCuneiform_Regular_otf,
-        HB_SCRIPT_CYPRIOT => &_binary_NotoSansCypriot_Regular_otf,
-        HB_SCRIPT_DESERET => &_binary_NotoSansDeseret_Regular_otf,
-        HB_SCRIPT_DEVANAGARI => &_binary_NotoSerifDevanagari_Regular_otf,
-        HB_SCRIPT_DOGRA => &_binary_NotoSerifDogra_Regular_otf,
-        HB_SCRIPT_DUPLOYAN => &_binary_NotoSansDuployan_Regular_otf,
-        HB_SCRIPT_EGYPTIAN_HIEROGLYPHS => &_binary_NotoSansEgyptianHieroglyphs_Regular_otf,
-        HB_SCRIPT_ELBASAN => &_binary_NotoSansElbasan_Regular_otf,
-        HB_SCRIPT_ELYMAIC => &_binary_NotoSansElymaic_Regular_otf,
-        HB_SCRIPT_ETHIOPIC => &_binary_NotoSerifEthiopic_Regular_otf,
-        HB_SCRIPT_GEORGIAN => &_binary_NotoSerifGeorgian_Regular_otf,
-        HB_SCRIPT_GLAGOLITIC => &_binary_NotoSansGlagolitic_Regular_otf,
-        HB_SCRIPT_GOTHIC => &_binary_NotoSansGothic_Regular_otf,
-        HB_SCRIPT_GRANTHA => &_binary_NotoSerifGrantha_Regular_otf,
-        HB_SCRIPT_GUJARATI => &_binary_NotoSerifGujarati_Regular_otf,
-        HB_SCRIPT_GUNJALA_GONDI => &_binary_NotoSansGunjalaGondi_Regular_otf,
-        HB_SCRIPT_GURMUKHI => &_binary_NotoSerifGurmukhi_Regular_otf,
-        HB_SCRIPT_HANIFI_ROHINGYA => &_binary_NotoSansHanifiRohingya_Regular_otf,
-        HB_SCRIPT_HANUNOO => &_binary_NotoSansHanunoo_Regular_otf,
-        HB_SCRIPT_HATRAN => &_binary_NotoSansHatran_Regular_otf,
-        HB_SCRIPT_HEBREW => &_binary_NotoSerifHebrew_Regular_otf,
-        HB_SCRIPT_IMPERIAL_ARAMAIC => &_binary_NotoSansImperialAramaic_Regular_otf,
-        HB_SCRIPT_INSCRIPTIONAL_PAHLAVI => &_binary_NotoSansInscriptionalPahlavi_Regular_otf,
-        HB_SCRIPT_INSCRIPTIONAL_PARTHIAN => &_binary_NotoSansInscriptionalParthian_Regular_otf,
-        HB_SCRIPT_JAVANESE => &_binary_NotoSansJavanese_Regular_otf,
-        HB_SCRIPT_KAITHI => &_binary_NotoSansKaithi_Regular_otf,
-        HB_SCRIPT_KANNADA => &_binary_NotoSerifKannada_Regular_otf,
-        HB_SCRIPT_KAYAH_LI => &_binary_NotoSansKayahLi_Regular_otf,
-        HB_SCRIPT_KHAROSHTHI => &_binary_NotoSansKharoshthi_Regular_otf,
-        HB_SCRIPT_KHMER => &_binary_NotoSerifKhmer_Regular_otf,
-        HB_SCRIPT_KHOJKI => &_binary_NotoSerifKhojki_Regular_otf,
-        HB_SCRIPT_KHUDAWADI => &_binary_NotoSansKhudawadi_Regular_otf,
-        HB_SCRIPT_LAO => &_binary_NotoSerifLao_Regular_otf,
-        HB_SCRIPT_LEPCHA => &_binary_NotoSansLepcha_Regular_otf,
-        HB_SCRIPT_LIMBU => &_binary_NotoSansLimbu_Regular_otf,
-        HB_SCRIPT_LINEAR_A => &_binary_NotoSansLinearA_Regular_otf,
-        HB_SCRIPT_LINEAR_B => &_binary_NotoSansLinearB_Regular_otf,
-        HB_SCRIPT_LISU => &_binary_NotoSansLisu_Regular_otf,
-        HB_SCRIPT_LYCIAN => &_binary_NotoSansLycian_Regular_otf,
-        HB_SCRIPT_LYDIAN => &_binary_NotoSansLydian_Regular_otf,
-        HB_SCRIPT_MAHAJANI => &_binary_NotoSansMahajani_Regular_otf,
-        HB_SCRIPT_MALAYALAM => &_binary_NotoSerifMalayalam_Regular_otf,
-        HB_SCRIPT_MANDAIC => &_binary_NotoSansMandaic_Regular_otf,
-        HB_SCRIPT_MANICHAEAN => &_binary_NotoSansManichaean_Regular_otf,
-        HB_SCRIPT_MARCHEN => &_binary_NotoSansMarchen_Regular_otf,
-        HB_SCRIPT_MASARAM_GONDI => &_binary_NotoSansMasaramGondi_Regular_otf,
-        HB_SCRIPT_MEDEFAIDRIN => &_binary_NotoSansMedefaidrin_Regular_otf,
-        HB_SCRIPT_MEETEI_MAYEK => &_binary_NotoSansMeeteiMayek_Regular_otf,
-        HB_SCRIPT_MENDE_KIKAKUI => &_binary_NotoSansMendeKikakui_Regular_otf,
-        HB_SCRIPT_MIAO => &_binary_NotoSansMiao_Regular_otf,
-        HB_SCRIPT_MODI => &_binary_NotoSansModi_Regular_otf,
-        HB_SCRIPT_MONGOLIAN => &_binary_NotoSansMongolian_Regular_otf,
-        HB_SCRIPT_MRO => &_binary_NotoSansMro_Regular_otf,
-        HB_SCRIPT_MULTANI => &_binary_NotoSansMultani_Regular_otf,
-        HB_SCRIPT_MYANMAR => &_binary_NotoSerifMyanmar_Regular_otf,
-        HB_SCRIPT_NABATAEAN => &_binary_NotoSansNabataean_Regular_otf,
-        HB_SCRIPT_NEWA => &_binary_NotoSansNewa_Regular_otf,
-        HB_SCRIPT_NEW_TAI_LUE => &_binary_NotoSansNewTaiLue_Regular_otf,
-        HB_SCRIPT_NKO => &_binary_NotoSansNKo_Regular_otf,
-        HB_SCRIPT_NUSHU => &_binary_NotoSansNushu_Regular_otf,
-        HB_SCRIPT_NYIAKENG_PUACHUE_HMONG => &_binary_NotoSerifNyiakengPuachueHmong_Regular_otf,
-        HB_SCRIPT_OGHAM => &_binary_NotoSansOgham_Regular_otf,
-        HB_SCRIPT_OLD_HUNGARIAN => &_binary_NotoSansOldHungarian_Regular_otf,
-        HB_SCRIPT_OLD_ITALIC => &_binary_NotoSansOldItalic_Regular_otf,
-        HB_SCRIPT_OLD_NORTH_ARABIAN => &_binary_NotoSansOldNorthArabian_Regular_otf,
-        HB_SCRIPT_OLD_PERMIC => &_binary_NotoSansOldPermic_Regular_otf,
-        HB_SCRIPT_OLD_PERSIAN => &_binary_NotoSansOldPersian_Regular_otf,
-        HB_SCRIPT_OLD_SOGDIAN => &_binary_NotoSansOldSogdian_Regular_otf,
-        HB_SCRIPT_OLD_SOUTH_ARABIAN => &_binary_NotoSansOldSouthArabian_Regular_otf,
-        HB_SCRIPT_OLD_TURKIC => &_binary_NotoSansOldTurkic_Regular_otf,
-        HB_SCRIPT_OL_CHIKI => &_binary_NotoSansOlChiki_Regular_otf,
-        HB_SCRIPT_ORIYA => &_binary_NotoSansOriya_Regular_otf,
-        HB_SCRIPT_OSAGE => &_binary_NotoSansOsage_Regular_otf,
-        HB_SCRIPT_OSMANYA => &_binary_NotoSansOsmanya_Regular_otf,
-        HB_SCRIPT_PAHAWH_HMONG => &_binary_NotoSansPahawhHmong_Regular_otf,
-        HB_SCRIPT_PALMYRENE => &_binary_NotoSansPalmyrene_Regular_otf,
-        HB_SCRIPT_PAU_CIN_HAU => &_binary_NotoSansPauCinHau_Regular_otf,
-        HB_SCRIPT_PHAGS_PA => &_binary_NotoSansPhagsPa_Regular_otf,
-        HB_SCRIPT_PHOENICIAN => &_binary_NotoSansPhoenician_Regular_otf,
-        HB_SCRIPT_PSALTER_PAHLAVI => &_binary_NotoSansPsalterPahlavi_Regular_otf,
-        HB_SCRIPT_REJANG => &_binary_NotoSansRejang_Regular_otf,
-        HB_SCRIPT_RUNIC => &_binary_NotoSansRunic_Regular_otf,
-        HB_SCRIPT_SAMARITAN => &_binary_NotoSansSamaritan_Regular_otf,
-        HB_SCRIPT_SAURASHTRA => &_binary_NotoSansSaurashtra_Regular_otf,
-        HB_SCRIPT_SHARADA => &_binary_NotoSansSharada_Regular_otf,
-        HB_SCRIPT_SHAVIAN => &_binary_NotoSansShavian_Regular_otf,
-        HB_SCRIPT_SIDDHAM => &_binary_NotoSansSiddham_Regular_otf,
-        HB_SCRIPT_SINHALA => &_binary_NotoSerifSinhala_Regular_otf,
-        HB_SCRIPT_SOGDIAN => &_binary_NotoSansSogdian_Regular_otf,
-        HB_SCRIPT_SORA_SOMPENG => &_binary_NotoSansSoraSompeng_Regular_otf,
-        HB_SCRIPT_SOYOMBO => &_binary_NotoSansSoyombo_Regular_otf,
-        HB_SCRIPT_SUNDANESE => &_binary_NotoSansSundanese_Regular_otf,
-        HB_SCRIPT_SYLOTI_NAGRI => &_binary_NotoSansSylotiNagri_Regular_otf,
-        HB_SCRIPT_TAGALOG => &_binary_NotoSansTagalog_Regular_otf,
-        HB_SCRIPT_TAGBANWA => &_binary_NotoSansTagbanwa_Regular_otf,
-        HB_SCRIPT_TAI_LE => &_binary_NotoSansTaiLe_Regular_otf,
-        HB_SCRIPT_TAI_THAM => &_binary_NotoSansTaiTham_Regular_otf,
-        HB_SCRIPT_TAI_VIET => &_binary_NotoSansTaiViet_Regular_otf,
-        HB_SCRIPT_TAKRI => &_binary_NotoSansTakri_Regular_otf,
-        HB_SCRIPT_TAMIL => &_binary_NotoSerifTamil_Regular_otf,
-        HB_SCRIPT_TELUGU => &_binary_NotoSerifTelugu_Regular_otf,
-        HB_SCRIPT_THAANA => &_binary_NotoSansThaana_Regular_otf,
-        HB_SCRIPT_THAI => &_binary_NotoSerifThai_Regular_otf,
-        HB_SCRIPT_TIBETAN => &_binary_NotoSerifTibetan_Regular_otf,
-        HB_SCRIPT_TIFINAGH => &_binary_NotoSansTifinagh_Regular_otf,
-        HB_SCRIPT_TIRHUTA => &_binary_NotoSansTirhuta_Regular_otf,
-        HB_SCRIPT_UGARITIC => &_binary_NotoSansUgaritic_Regular_otf,
-        HB_SCRIPT_VAI => &_binary_NotoSansVai_Regular_otf,
-        HB_SCRIPT_WANCHO => &_binary_NotoSansWancho_Regular_otf,
-        HB_SCRIPT_WARANG_CITI => &_binary_NotoSansWarangCiti_Regular_otf,
-        HB_SCRIPT_YEZIDI => &_binary_NotoSerifYezidi_Regular_otf,
-        HB_SCRIPT_YI => &_binary_NotoSansYi_Regular_otf,
-        HB_SCRIPT_ZANABAZAR_SQUARE => &_binary_NotoSansZanabazarSquare_Regular_otf,
-
-        HB_SYMBOL_MATHS => &_binary_NotoSansMath_Regular_otf,
-        HB_SYMBOL_MUSIC => &_binary_NotoMusic_Regular_otf,
-        HB_SYMBOL_MISC_ONE => &_binary_NotoSansSymbols_Regular_otf,
-        HB_SCRIPT_BRAILLE | HB_SYMBOL_MISC_TWO => &_binary_NotoSansSymbols2_Regular_otf,
-        HB_SYMBOL_EMOJI => &_binary_NotoEmoji_Regular_ttf,
-
-        _ => &_binary_DroidSansFallback_ttf,
-    }
-
-    #[cfg(all(target_os = "linux", not(target_arch = "arm")))]
     match script {
         HB_SCRIPT_HANGUL |
         HB_SCRIPT_HIRAGANA |
